@@ -2,31 +2,32 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
     title:{
-        type: String,
+        type:String,
         required:true,
-        minlength:20,
-        maxlength:100, 
+        minLength: 2,
+        maxlength:20,
     },
-
-    image:{
-        type: String,
+    images:{
+        type:String,
         required:true,
-        width: 50,
-        height:50,
-   },
+     },
     body:{
-        type: String,
+        type:String,
         required:true,
-        minlength:20,
-        maxlength:100,
-    }
-//user:{
-  //      type:mongoose.Schema.Types.ObjectId,
-    //    required:false,
-      //  ref:"user",
-
-    //}
-
+        minLength: 2,
+        maxlength:200,
+    },
+    user:{
+        type: String,
+    },
+    created_at:{
+        type:Date,
+        default:new Date()},
+    updated_at:{
+        type:Date,
+        default:new Date(),
+    },
+    
 });
 
-module.exports = mongoose.model("post", postSchema);
+module.exports = mongoose.model("post",postSchema);

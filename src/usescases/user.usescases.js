@@ -1,23 +1,23 @@
 const createError = require ("http-errors");
 const user = require ("../models/user.model");
 
-// Create new user
+// Create new user ok
 
 async function create (data){
     const newUser = await user.create(data);
     return newUser;
 }
 
-// Get all users
+// Get all users ok
 
-async function getAllUsers(){
-    const users = await user.find();
+async function getAll(){
+    const users = await user.find({});
     return users;
 }
 
 // Get User By id
 
-async function getUserById(id){
+async function getById(id){
     const user = await user.findById(id);
     return user;
 }
@@ -35,7 +35,7 @@ async function deleteUserById(id){
     const user = await user.findById(id);
      
     if (!user){
-        throw new createError(404, "User not found");
+        throw createError(404, "User not found");
     }
 
     const deleteUser = await user.findAndDelete(user);
@@ -45,10 +45,10 @@ async function deleteUserById(id){
 
 module.exports  = {
     create,
-    getAllUsers,
-    getUserById,
+    getAll,
+    getById,
     updateUserById,
-    deleteUserById
+    deleteUserById,
     
-}
+};
 

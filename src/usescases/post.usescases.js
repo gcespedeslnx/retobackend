@@ -1,51 +1,35 @@
-const createError = require ("http-errors");
-const post = require("../models/post.model");
+const Post = require("../models/post.model");
 
-// create a post
+async function getAll(){
+    const post = await Post.find();
+    return post;
+} 
 
-async function create(data){
-    const newPost = await post.create(data);
+async function getById(id){
+    const post = await Post.findById(id);
+    return post;
+}
+async function create(post){
+    const newPost = await Post.create(post);
     return newPost;
 }
-// Get all post
 
-async function getAllPost(){
-    const posts = await post.find();
-    return posts;
-}
-
-// Get post by id
-
-async function getByIdPost(id){
-    const post = await post.findById(id);
-    return post;    
-}
-
-//Update post by id
-
-async function updateByIdPost(id, newdData){
-    const post = await post.findByIdAndUpdate(id, newdData, {new: true});
+async function updateById(id, Data){
+    const today = new Date();
+    Data = today;
+    const post = await Post.findByIdAndUpdate(id, Data, {new: true});
     return post;
 }
 
-// Delete post by id
-
-async function deleteByPost(id){
-    const postFind = await post.findById(id);
-    if(!postFind){
-        throw createError(404,"Post not found");
-    }
-
-    const deletePost  = await post.findByIdAndDelete(id);
-  return deletePost;
+async function deleteById(id){
+    const post = await Post.findByIdAndDelete(id);
+    return post;
 }
-
 
 module.exports = {
+    getAll, 
+    getById, 
     create,
-    getAllPost,
-    getByIdPost,
-    updateByIdPost,
-    deleteByPost,
-}
-
+    updateById, 
+    deleteById,
+};  //exporting
