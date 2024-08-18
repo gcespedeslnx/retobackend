@@ -52,7 +52,7 @@ router.post("/", async (request, response)=>{
     const data = request.body;
     const id = request.params.id;
     const findID = await postUsesCases.getById(id);
-    
+        
     const post = await postUsesCases.create(data);
 
     response.json({

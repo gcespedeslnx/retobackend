@@ -10,8 +10,7 @@ const userSchema = new mongoose.Schema({
     profilePic:{
         type: String,
         required: true,
-        width: 50,
-        height:50,
+        
     },
     email:{
         type: String,
@@ -22,7 +21,7 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true,
-        select:true,
+    
     },
     createAt:{
         type: Date,

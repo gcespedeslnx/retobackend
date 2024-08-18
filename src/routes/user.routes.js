@@ -36,7 +36,7 @@ router.post("/", async (request, response)=>{
         }
       
       const user = await userUsesCases.create(data);
-  
+        
       response.json({
           success: true,
           message: "User created",
@@ -118,5 +118,25 @@ router.delete("/:id",async(request, response)=>{
         });        
     }
 });
+
+router.post("/signup", async (request, response)=>{
+    try {
+        const data = request.body;
+        const user = await userUsesCases.signUp(data);
+
+        response.json({
+            success: true,
+            message:"Created User",
+            data:{user},
+        });
+    } catch (error) {
+        response.status(error.status || 500);
+        response.json({
+            success:false,
+            message:error.message,
+    })
+        
+    }
+})
 
 module.exports = router;
