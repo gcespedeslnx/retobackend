@@ -30,7 +30,10 @@ router.post("/", async (request, response)=>{
     try {
       const data = request.body;
       const id = request.params.id
-
+        
+       if (id){
+          throw  createError(404, "User Already exist");
+        }
       
       const user = await userUsesCases.create(data);
   
@@ -54,9 +57,9 @@ router.get("/:id", async (request, response)=>{
         const id = request.params.id;       
         const user = await userUsesCases.getById(id);
          
-        //if (!user){
-          //  throw createError(404, "User not found");
-      //  }
+        if (!user){
+            throw createError(404, "User not found");
+        }
 
         response.json({
             success: true,
