@@ -15,8 +15,6 @@ async function create(post){
 }
 
 async function updateById(id, Data){
-    const today = new Date();
-    Data = today;
     const post = await Post.findByIdAndUpdate(id, Data, {new: true});
     return post;
 }

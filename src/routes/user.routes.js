@@ -1,7 +1,7 @@
 const express = require("express");
 const createError = require("http-errors");
-
 const userUsesCases = require("../usescases/user.usescases");
+
 
 const router = express.Router();
 
@@ -24,14 +24,39 @@ router.get("/", async (request, response)=>{
         
     }
 });
+
+
+router.post("/", async (request, response)=>{
+    try {
+      const data = request.body;
+      const id = request.params.id
+
+      
+      const user = await userUsesCases.create(data);
+  
+      response.json({
+          success: true,
+          message: "User created",
+          data:{user},
+      });
+      
+    } catch (error) {
+      response.status(error.status || 500);
+      response.json({
+          success:false,
+          message: error.message,
+      });    
+    }
+  });
+  
 router.get("/:id", async (request, response)=>{
     try {
         const id = request.params.id;       
-        const user= await userUsesCases.getById(id);
+        const user = await userUsesCases.getById(id);
          
-        if (!user){
-            throw createError(404, "User not found");
-        }
+        //if (!user){
+          //  throw createError(404, "User not found");
+      //  }
 
         response.json({
             success: true,
@@ -47,33 +72,13 @@ router.get("/:id", async (request, response)=>{
     }
 });
 
-router.post("/", async (request, response)=>{
-  try {
-    const data = request.body;
-    
-    const user = await userUsesCases.create(data);
-
-    response.json({
-        success: true,
-        message: "Post created",
-        data:{user},
-    });
-    
-  } catch (error) {
-    response.status(error.status || 500);
-    response.json({
-        success:false,
-        message: error.message,
-    });    
-  }
-});
 
 router.patch("/:id", (request , response)=>{
     try {
         const id = request.params.id;
         const data = request.body;
         
-        const post = userUsesCases.updateUserById(id, data);
+        const post = userUsesCases.updateUser(id, data);
         
         response.json({
             success: true,
@@ -94,7 +99,7 @@ router.delete("/:id",async(request, response)=>{
     try {
         const id = request.params.id;
 
-        const user = await userUsesCases.deleteUserById(id);
+        const user = await userUsesCases.deleteUser(id);
 
         response.json({
             success: true,
