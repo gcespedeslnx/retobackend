@@ -1,11 +1,12 @@
 const express = require("express");
 const createError = require("http-errors");
 const userUsesCases = require("../usescases/user.usescases");
+const auth = require("../middlewares/auth");
 
 
 const router = express.Router();
 
-router.get("/", async (request, response)=>{
+router.get("/", auth, async (request, response)=>{
     try {
         const user = await userUsesCases.getAll();
         
@@ -128,6 +129,26 @@ router.post("/signup", async (request, response)=>{
             success: true,
             message:"Created User",
             data:{user},
+        });
+    } catch (error) {
+        response.status(error.status || 500);
+        response.json({
+            success:false,
+            message:error.message,
+    })
+        
+    }
+})
+
+router.post("/login", async (request, response)=>{
+    try {
+        const data = request.body;
+        const token = await userUsesCases.login(data);
+
+        response.json({
+            success: true,
+            message:" User log in",
+            data:{token},
         });
     } catch (error) {
         response.status(error.status || 500);

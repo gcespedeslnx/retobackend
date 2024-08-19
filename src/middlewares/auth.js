@@ -4,7 +4,7 @@ const userUsesCases = require("../usescases/user.usescases");
 
 const jwt = require("../lib/jwt");
 
-function auth(){
+function auth(request, response, next){
     try {
         const authorization = request.authorization;
 
@@ -18,9 +18,9 @@ function auth(){
         request.user = user;
         next();
     } catch (error) {
-        response.status(400);
+        response.status(error.status || 400);
 
-        response.jason({
+        response.json({
             success: false,
             message: error.message,
         });
@@ -28,3 +28,5 @@ function auth(){
 
     }
 }
+
+module.exports = auth;

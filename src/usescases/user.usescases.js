@@ -3,6 +3,7 @@ const createError = require("http-errors");
 const encryption = require("../lib/encryption");
 const jwt = require("../lib/jwt");
 
+
 // Access logn in to the page
 
 async function login(data){
@@ -19,7 +20,7 @@ async function login(data){
         throw createError (401,"Invalid credential");
     }
 
-    //const token = jwt.sign(id:user._id);
+    const token = jwt.sign({id:user._id});
     return token;
 }
 
